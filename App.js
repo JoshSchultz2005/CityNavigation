@@ -1,87 +1,91 @@
+import 'react-native-gesture-handler';
 import * as React from 'react';
 import {StyleSheet, Text, Image, View, TextInput, Pressable } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import * as SplashScreen from 'expo-splash-screen';
 
-const mainImage = require('./assets/bruschetta.png');
+const art = require('./assets/art.png');
+const mile = require('./assets/mile.png');
+const pier = require('./assets/pier.png');
+const water = require('./assets/water.png');
+const willis = require('./assets/willis.png');
 
 SplashScreen.preventAutoHideAsync();
 setTimeout(SplashScreen.hideAsync, 2000);
 
-function HomeScreen({ navigation }) {
-  const [number, onChangeNumber] = React.useState('');
-  
+function ArtScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.mainText}>Bruschetta Recipe</Text>
-      <Image source={mainImage} style={styles.mainImage} />
-      <TextInput
-        style={styles.textInput}
-        onChangeText={onChangeNumber}
-        value={number}
-        placeholder="Enter the Number of Servings"
-        keyboardType="numeric"
-      />
-      <Pressable 
-        style={styles.button}
-        onPress={() => {
-          /* 1. Navigate to the Details route with params */
-          navigation.navigate('Details', {
-            number: number
-          });
-        }}
-      >
-      <Text style={styles.button_text}>View Recipe</Text>
-      </Pressable>
+      <Image source={art} style={styles.Image} />
     </View>
   );
 }
 
-function DetailsScreen({ route }) {
-  /* 2. Get the param */
-  const { number } = route.params;
+function MileScreen() {
   return (
-    <View>
-      <Text style={styles.secondMainText}>Bruschetta</Text>
-      <Text style={styles.labels}>Ingredients</Text>
-      <Text style={styles.Ingredients_list}>{JSON.stringify(number * 8)} plum tomatoes</Text>
-      <Text style={styles.Ingredients_list}>{JSON.stringify(number * 12)} basil leaves</Text>
-      <Text style={styles.Ingredients_list}>{JSON.stringify(number * 6)} garlic cloves, chopped</Text>
-      <Text style={styles.Ingredients_list}>{JSON.stringify(number * 6)} TB olive oil</Text>
-      <Text style={styles.labels}>Directions</Text>
-      <Text style={styles.Ingredients_list}>
-        Combine the ingredients.
-        Add salt to taste.
-        Top French bread slices with mixture
-      </Text>
+    <View style={styles.container}>
+      <Image source={mile} style={styles.Image} />
     </View>
   );
 }
 
-const Stack = createNativeStackNavigator();
+function PierScreen() {
+  return (
+    <View style={styles.container}>
+      <Image source={pier} style={styles.Image} />
+    </View>
+  );
+}
+
+function WaterScreen() {
+  return (
+    <View style={styles.container}>
+      <Image source={water} style={styles.Image} />
+    </View>
+  );
+}
+
+function WillisScreen() {
+  return (
+    <View style={styles.container}>
+      <Image source={willis} style={styles.Image} />
+    </View>
+  );
+}
+
+const Drawer = createDrawerNavigator();
 
 export default function App() {
   return (
     <NavigationContainer >
-      <Stack.Navigator
-      screenOptions={{
-        headerStyle: {
-          backgroundColor: '#f4511e',
-        },
-        headerTintColor: '#fff',
-    }}>
-        <Stack.Screen 
-          name="Healthy Recipes" 
-          component={HomeScreen}
-          options={{ title: 'Healthy Recipes' }}
+      <Drawer.Navigator>
+        <Drawer.Screen 
+          name="Art institute of Chicago" 
+          component={ArtScreen}
+          options={{ title: 'Art institute of Chicago' }}
         />
-        <Stack.Screen 
-          name="Details" 
-          component={DetailsScreen}
-          options={{ title: '' }}
+         <Drawer.Screen 
+          name="Magnificent Mile" 
+          component={MileScreen}
+          options={{ title: 'Magnificent Mile' }}
         />
-      </Stack.Navigator>
+         <Drawer.Screen 
+          name="Navy Pier" 
+          component={PierScreen}
+          options={{ title: 'Navy Pier' }}
+        />
+         <Drawer.Screen 
+          name="Water Tower" 
+          component={WaterScreen}
+          options={{ title: 'Water Tower' }}
+        />
+         <Drawer.Screen 
+          name="Willis Tower" 
+          component={WillisScreen}
+          options={{ title: 'Willis Tower' }}
+        />
+      </Drawer.Navigator>
     </NavigationContainer>
   );
 }
@@ -91,46 +95,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
+    justifyContent: 'center'
   },
-  mainText: {
-    fontSize: 45,
-    fontWeight: 'bold',
-    paddingTop: 100,
-    paddingBottom: 10
+  Image: {
+    width: 320,
+    height: 480
   },
-  secondMainText: {
-    fontSize: 45,
-    fontWeight: 'bold',
-    paddingTop: 100,
-    paddingBottom: 10,
-    textAlign: 'center'
-  },
-  mainImage: {
-    width: 411,
-    height: 252
-  },
-  textInput: {
-    textAlign: 'center',
-    fontSize: 20,
-    paddingTop: 35,
-    paddingBottom: 35
-  },
-  button: {
-    backgroundColor: 'grey',
-    borderWidth: 10,
-    borderColor: 'grey',
-  },
-  button_text: {
-    color: 'white'
-  },
-  labels: {
-    fontSize: 30,
-    paddingLeft: 25,
-    paddingTop:10
-  },
-  Ingredients_list: {
-    fontSize: 25,
-    paddingLeft: 50,
-    paddingRight:50
-  }
 });
